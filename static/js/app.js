@@ -19,7 +19,7 @@ function buildBarPlot() {
     //var inputValue = d3.select("#subjectID").property("value");
     //console.log(`dropdown value ${inputValue}`);
 
-    d3.json("samples.json").then(function(data, inputValue){
+    d3.json("samples.json").then(function(data){
         var samples = data.samples;
 
         var inputValue = d3.select("#subjectID").property("value");
