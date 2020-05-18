@@ -14,45 +14,30 @@ function buildDropdown() {
 
 buildDropdown();
 
-// Read in belly buttn biodiversity data 
+//-----------------------------Plots----------------------------------------//
+// Build the horizontal bar plot
 function buildBarPlot() {
-    //var inputValue = d3.select("#subjectID").property("value");
-    //console.log(`dropdown value ${inputValue}`);
-
     d3.json("samples.json").then(function(data){
         var samples = data.samples;
 
         var inputValue = d3.select("#subjectID").property("value");
-        console.log(`dropdown value ${inputValue}`);
+        // console.log(inputValue);
 
-        // console.log("master dataset");
-        // console.log(data);
-
+        // Get object of the selected id
         var selectedSampleData = samples.filter(obj => obj.id === inputValue);
-
-        console.log(selectedSampleData);
-        
-        //console.log("samples dict from big data source")
-        //console.log(samples);
+        //console.log(selectedSampleData);
 
         // Sort dataset
         var sortedSample = selectedSampleData.sort((first, second) =>  second.sample_values - first.sample_values);
         sortedSample = sortedSample[0];
-        //console.log('sortedSample');
-        //console.log(sortedSample);
         
+        // Select Top Ten OTUs
         sortedSample['sample_values'] = sortedSample['sample_values'].slice(0,10).reverse();
         sortedSample['otu_ids'] = sortedSample['otu_ids'].slice(0, 10).reverse();
         sortedSample['otu_labels'] = sortedSample['otu_labels'].slice(0, 10).reverse();
-        //console.log('sliced sortedSample');
-        //console.log(sortedSample);
 
-        //console.log("sample values");
-        //console.log(sortedSample.sample_values);
-
+        // Add 'OTU' to otu_ids
         sortedSample['otu_ids_2'] = sortedSample['otu_ids'].map(id => `OTU ${id}`)
-        //console.log("otu_ids");
-        //console.log(sortedSample.otu_ids_2);
 
         var trace = [{
             type: "bar",
@@ -72,6 +57,7 @@ function buildBarPlot() {
 
 buildBarPlot();
 
+//d3.select("#subjectID").on("change", buildBarPlot);
 
 function buildBubblePlot() {
     d3.json("samples.json").then(function(data){
@@ -108,6 +94,49 @@ function buildBubblePlot() {
     });
 };
 
-buildBubblePlot();
+//buildBubblePlot();
+//-------------------------------------------------------------------------//
 
-d3.select("#subjectID").on("change", buildBarPlot);
+//--------------------------Demographics info-----------------------------//
+var demoInfo = d3.select(".card-body");
+
+function buildDemoInfo(){
+    d3.json("samples.json").then(function(data){
+        var metadata = data.metadata;
+        //console.log(metadata);
+
+        var inputValue = d3.select("#subjectID").property("value");
+        //console.log(inputValue);
+
+        // Get object of the selected id
+        var selectedSampleData = metadata.filter(obj => obj.id === parseInt(inputValue));
+        selectedSampleData = selectedSampleData[0];
+        //console.log(selectedSampleData);
+
+        demoInfo.html('');
+
+        Object.entries(selectedSampleData).forEach(([key, value]) => {
+            //console.log(key);
+            //console.log(value);
+
+            demoInfo.append("p")
+                    .classed("card-text", true)
+                    .text(`${key}: ${value}`);
+        });
+
+
+    });
+};
+
+buildDemoInfo();
+
+//d3.select("#subjectID").on("change", updateDemoInfo);
+//-------------------------------------------------------------------------//
+//----------------------------Event Handler-------------------------------//
+
+function updateDashInfo(){
+    buildDemoInfo();
+    buildBarPlot();
+};
+
+d3.select("#subjectID").on("change", updateDashInfo);
