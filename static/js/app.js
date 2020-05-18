@@ -39,37 +39,65 @@ function buildBarPlot() {
             text: sortedSamples.otu_labels,
         }];
 
-        var layout = {
+        var layout1 = {
             title: "Top 10 OTU's"
         };
 
-        Plotly.newPlot("h-plot", trace, layout);
+        Plotly.newPlot("h-plot", trace, layout1);
 
     });
 };
 
 buildBarPlot();
 
-// function buildBubblePlot() {
-//     d3.json("samples.json").then(function(data){
-//         var trace2 = [{
-//             mode: "markers",
-//             y: sortedSamples.sample_values,
-//             x: sortedSamples.otu_ids,
-//             text: sortedSamples.otu_labels,
-//             marker: {
-//                 color: sortedSamples.otu_ids,
-//                 size: sortedSamples.sample_values
-//             }
-//         }];
+function buildBubblePlot() {
+    d3.json("samples.json").then(function(data){
 
-//         var layout2 = {
-//             xaxis: {title: "OTU ID"}
-//         };
+        var data_samples = data.samples.slice(0,3);
+        console.log(data_samples);
 
-//         Plotly.newPlot("marker-plot", trace2, layout2);
+        var data = data_samples.map(sample => {
+            
+            var trace = {
+                mode: "markers",
+                y: sample.sample_values,
+                x: sample.otu_ids,
+                text: sample.otu_labels,
+                marker: {
+                    color: sample.otu_ids,
+                    size: sample.sample_values,
+                    sizeref: 2
+                    //sizeref: 2.0 * Math.max(sample.sample_values) / (2**2),
+                    //sizemode: 'area'
+                }
+            };
 
-//     });
-// };
+            return trace;
+        });
 
-// buildBubblePlot()
+        console.log("data for bubble graphs");
+        console.log(data);
+
+
+        // var trace2 = [{
+        //     mode: "markers",
+        //     y: sortedSamples.sample_values,
+        //     x: sortedSamples.otu_ids,
+        //     text: sortedSamples.otu_labels,
+        //     marker: {
+        //         color: sortedSamples.otu_ids,
+        //         size: sortedSamples.sample_values
+        //     }
+        // }];
+
+        var layout2 = {
+            xaxis: {title: "OTU ID"},
+            showlegend: false
+        };
+
+        Plotly.newPlot("marker-plot", data, layout2);
+
+    });
+};
+
+buildBubblePlot()
