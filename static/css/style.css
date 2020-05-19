@@ -1,0 +1,21 @@
+body{
+    font-family: Cambria; 
+    /* , Cochin, Georgia, Times, 'Times New Roman', serif; */
+}
+
+#sidebar{
+    background-color: rgb(236, 233, 233);
+    padding-top: 20px;
+}
+
+.jumbotron{
+    margin-bottom: 0px;
+    text-align: center;
+    background-color: rgb(168, 199, 209);
+    /* border: 10px black !important; */
+}
+
+.main-page{
+    padding-top: 10px;
+    text-align: center;
+}
