@@ -45,7 +45,8 @@ function buildBarPlot() {
             x: sortedSample.sample_values,
             y: sortedSample.otu_ids_2,
             text: sortedSample.otu_labels,
-            textfont: {family: "Cambria"}
+            textfont: {family: "Cambria"},
+            marker: {color: sortedSample.otu_ids}
         }];
 
         var layout1 = {
