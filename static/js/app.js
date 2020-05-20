@@ -192,8 +192,6 @@ function buildDemoInfo(){
                     .classed("card-text", true)
                     .text(`${key}: ${value}`);
         });
-
-
     });
 };
 

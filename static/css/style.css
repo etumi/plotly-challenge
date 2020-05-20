@@ -4,7 +4,7 @@ body{
 }
 
 #sidebar{
-    background-color: rgb(189, 212, 219);
+    background-color: rgb(168, 199, 209);
     padding-top: 20px;
 }
 
@@ -12,10 +12,20 @@ body{
     margin-bottom: 0px;
     text-align: center;
     background-color: rgb(168, 199, 209);
-    /* border: 10px black !important; */
+    /* border-style:solid; */
+    border-bottom-style: solid;
 }
 
 .main-page{
     padding-top: 10px;
     text-align: center;
+}
+
+label{
+    font-weight: bold;
+}
+
+.card-header{
+    font-weight: bold;
+    background-color: gainsboro;
 }
