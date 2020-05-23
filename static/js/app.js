@@ -84,9 +84,9 @@ function buildBubblePlot() {
                 marker: {
                     color: sample.otu_ids,
                     size: sample.sample_values,
-                    sizeref: 2
-                    //sizeref: 2.0 * Math.max(sample.sample_values) / (2**2),
-                    //sizemode: 'area'
+                    sizeref: 0.1,
+                    //sizeref: 0.1 * Math.max(sample.sample_values) / (50**2),
+                    sizemode: 'area'
                 },
                 textfont: {family: "Cambria"}
             };
